@@ -21,7 +21,11 @@ import javax.sql.DataSource;
 @ComponentScan(basePackages = {"org.scoula.member.service",
         "org.scoula.asset.service",
         "org.scoula.product.service"})
-@MapperScan(basePackages = {"org.scoula"})
+@MapperScan(basePackages = {
+        "org.scoula.member.mapper",
+        "org.scoula.asset.mapper",
+        "org.scoula.product.mapper"
+})
 public class RootConfig {
 
     @Value("${jdbc.driver}") String driver;
