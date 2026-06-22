@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.scoula.asset.mapper.AssetMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="assetId">
+        INSERT INTO asset (member_id, category, asset_type, amount)
+        VALUES (#{memberId}, #{category}, #{assetType}, #{amount})
+    </insert>
+
+    <select id="getList" resultType="org.scoula.asset.domain.AssetVO">
+        SELECT * FROM asset
+        WHERE member_id = #{memberId}
+        ORDER BY asset_id DESC
+    </select>
+
+    <select id="get" resultType="org.scoula.asset.domain.AssetVO">
+        SELECT * FROM asset WHERE asset_id = #{assetId}
+    </select>
+
+    <update id="update">
+        UPDATE asset
+        SET category   = #{category},
+            asset_type = #{assetType},
+            amount     = #{amount}
+        WHERE asset_id = #{assetId}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM asset WHERE asset_id = #{assetId}
+    </delete>
+
+</mapper>

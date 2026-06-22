@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.scoula.member.mapper.MemberMapper">
+
+    <select id="getById" resultType="org.scoula.member.domain.MemberVO">
+        SELECT * FROM member WHERE member_id = #{memberId}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="memberId">
+        INSERT INTO member (username, password, nickname, `character`, gender, age, region)
+        VALUES (#{username}, #{password}, #{nickname}, #{character}, #{gender}, #{age}, #{region})
+    </insert>
+
+    <update id="update">
+        UPDATE member
+        SET nickname = #{nickname},
+            `character` = #{character}
+        WHERE member_id = #{memberId}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM member WHERE member_id = #{memberId}
+    </delete>
+
+    <select id="get" resultType="org.scoula.member.domain.MemberVO">
+        SELECT * FROM member WHERE username = #{username}
+    </select>
+
+    <select id="checkUsername" resultType="int">
+        SELECT COUNT(*) FROM member WHERE username = #{username}
+    </select>
+
+</mapper>
