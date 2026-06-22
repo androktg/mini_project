@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ProductVO {
-    Integer productId;
+    Long productId;
     String productName;
     String bank;
     String productType;
