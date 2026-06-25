@@ -32,7 +32,6 @@ class MemberServiceTest {
                 .build();
 
         MemberDTO joined = service.join(member);
-        // 결과 로그에 password가 안 찍히는지도 함께 확인해보면 좋아 (of()에서 제외했으므로 null)
         log.info("가입 결과(password 제외): " + joined);
     }
 
