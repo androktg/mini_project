@@ -6,6 +6,7 @@ import org.scoula.member.dto.MemberDTO;
 import org.scoula.member.dto.MemberJoinDTO;
 import org.scoula.member.mapper.MemberMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -17,6 +18,7 @@ public class MemberServiceImpl implements MemberService {
     // DB 접근 담당(MyBatis Mapper). 스프링이 생성자를 통해 자동으로 넣어줌.
     final private MemberMapper mapper;
 
+    @Transactional
     @Override
     public MemberDTO join(MemberJoinDTO member) {
         // 1. 아이디 중복 선검사 → 중복이면 예외를 던져서 가입을 중단시킴
@@ -45,6 +47,7 @@ public class MemberServiceImpl implements MemberService {
         return MemberDTO.of(vo);
     }
 
+    @Transactional
     @Override
     public MemberDTO update(MemberDTO member) {
         // 1. 수정 대상이 실제로 존재하는지 먼저 확인. 없으면 예외.
@@ -56,6 +59,7 @@ public class MemberServiceImpl implements MemberService {
         return get(member.getMemberId());
     }
 
+    @Transactional
     @Override
     public boolean delete(Long memberId) {
         return mapper.delete(memberId) > 0;
