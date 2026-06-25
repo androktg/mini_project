@@ -26,8 +26,8 @@ import javax.sql.DataSource;
         "org.scoula.product.service"
 })
 @MapperScan(basePackages = {
-        "org.scoula.asset.mapper",
         "org.scoula.member.mapper",
+        "org.scoula.asset.mapper",
         "org.scoula.product.mapper"
 })
 public class RootConfig {
