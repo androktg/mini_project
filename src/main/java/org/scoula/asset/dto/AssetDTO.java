@@ -20,17 +20,26 @@ public class AssetDTO{
     Long amount;
     Date createdAt;
 
+    // VO -> DTO (조회 결과 내보낼 때) : static
+    public static AssetDTO of(AssetVO vo) {
+        return AssetDTO.builder()
+                .assetId(vo.getAssetId())
+                .memberId(vo.getMemberId())
+                .category(vo.getCategory())
+                .assetType(vo.getAssetType())
+                .amount(vo.getAmount())
+                .createdAt(vo.getCreatedAt())
+                .build();
+    }
 
-    // VO -> DTO 변환
-    public static AssetDTO of(AssetVO vo){
-    return AssetDTO.builder()
-            .assetId(vo.getAssetId())
-            .memberId(vo.getMemberId())
-            .category(vo.getCategory())
-            .assetType(vo.getAssetType())
-            .amount(vo.getAmount())
-            .createdAt(vo.getCreatedAt())
-            .build();
-
+    // DTO -> VO (저장/수정하러 갈 때) : 인스턴스 메서드
+    public AssetVO toVO() {
+        return AssetVO.builder()
+                .assetId(assetId)
+                .memberId(memberId)
+                .category(category)
+                .assetType(assetType)
+                .amount(amount)
+                .build();
     }
 }

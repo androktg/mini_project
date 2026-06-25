@@ -18,9 +18,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @PropertySource({"classpath:/application.properties"})
-@ComponentScan(basePackages = {"org.scoula.member.service",
-        "org.scoula.asset.service",
-        "org.scoula.product.service"})
+@ComponentScan(basePackages = {"org.scoula"})
 @MapperScan(basePackages = {"org.scoula"})
 public class RootConfig {
 

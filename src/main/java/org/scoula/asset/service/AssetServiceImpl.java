@@ -1,55 +1,68 @@
 package org.scoula.asset.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import org.scoula.asset.domain.AssetVO;
 import org.scoula.asset.dto.AssetDTO;
 import org.scoula.asset.mapper.AssetMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-@Log4j2
 @Service
 @RequiredArgsConstructor
-public class AssetServiceImpl implements AssetService{
+public class AssetServiceImpl implements AssetService {
 
-    //의존성 주입 : 생성자 주입 방식으로 db 접근 객체(Mapper) 가져오는 역할
     private final AssetMapper mapper;
 
     @Override
-    public List<AssetDTO> getList() {
-        log.info("자산 목록 조회 요청 수신");
-        // 추후 구현 단계에서 mapper.getList() 등으로 데이터를 조회한 뒤
-        // VO 리스트를 DTO 리스트로 변환하여 반환하는 로직
-        return List.of();
+    public List<AssetDTO> getList(Long memberId) {
+        // 본인(memberId) 자산만 조회 -> 각 VO를 DTO로 변환
+        return mapper.getList(memberId).stream()
+                .map(AssetDTO::of)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public AssetDTO get(Long assetID) {
-        log.info("자산 개별 상세 조회 - assetID: {}", assetID);
-        return null;
+    public AssetDTO get(Long assetId) {
+        // id로 조회, 없으면 예외
+        AssetVO vo = Optional.ofNullable(mapper.get(assetId))
+                .orElseThrow(NoSuchElementException::new);
+        return AssetDTO.of(vo);
     }
 
+    @Transactional
     @Override
-    public void create(AssetDTO asset) {
-        log.info("새로운 자산 등록 - asset: {}", asset);
-        // mapper.insert(asset.toVO()) 형태의 비즈니스 로직이 구현될 자리
+    public AssetDTO create(AssetDTO dto) {
+        // 1. DTO -> VO 변환
+        AssetVO vo = dto.toVO();
+        // 2. DB 저장 (insert 후 useGeneratedKeys로 assetId가 vo에 채워짐)
+        mapper.insert(vo);
+        // 3. 저장된 자산을 다시 조회해서 반환
+        return get(vo.getAssetId());
     }
 
+    @Transactional
     @Override
-    public boolean update(AssetDTO asset) {
-        log.info("자산 정보 수정 - asset: {}", asset);
-        return false;
+    public AssetDTO update(AssetDTO dto) {
+        // 1. 수정 대상이 존재하는지 확인 (없으면 예외)
+        Optional.ofNullable(mapper.get(dto.getAssetId()))
+                .orElseThrow(NoSuchElementException::new);
+        // 2. DTO -> VO 변환 후 수정
+        mapper.update(dto.toVO());
+        // 3. 수정된 결과를 다시 조회해서 반환
+        return get(dto.getAssetId());
     }
 
+    @Transactional
     @Override
-    public boolean delete(Long assetID) {
-        log.info("자산 정보 삭제 - assetID: {}", assetID);
-        return false;
+    public void delete(Long assetId) {
+        // 존재 확인 후 삭제
+        Optional.ofNullable(mapper.get(assetId))
+                .orElseThrow(NoSuchElementException::new);
+        mapper.delete(assetId);
     }
-
-
-
-
 }
-
