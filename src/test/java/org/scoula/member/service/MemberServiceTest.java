@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.scoula.config.RootConfig;
 import org.scoula.member.dto.MemberDTO;
+import org.scoula.member.dto.MemberJoinDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -21,7 +22,7 @@ class MemberServiceTest {
     @Test
     public void join() {
         // 빌더 패턴으로 가입에 쓸 회원 정보를 만든다
-        MemberDTO member = MemberDTO.builder()
+        MemberJoinDTO member = MemberJoinDTO.builder()
                 .username("svc_test01")
                 .password("pw1234")
                 .nickname("서비스테스터")

@@ -1,11 +1,12 @@
 package org.scoula.member.service;
 
 import org.scoula.member.dto.MemberDTO;
+import org.scoula.member.dto.MemberJoinDTO;
 
 public interface MemberService {
 
     // 회원가입 (아이디 중복 검사 후 등록)
-    MemberDTO join(MemberDTO member);
+    MemberDTO join(MemberJoinDTO member);
 
     // username으로 회원 조회 (없으면 예외)
     MemberDTO get(String username);

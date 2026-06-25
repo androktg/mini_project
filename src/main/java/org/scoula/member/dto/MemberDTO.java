@@ -16,7 +16,6 @@ public class MemberDTO {
     // ↓ 화면/API에서 다루는 회원 정보 필드들. DB 컬럼(snake_case)과 이름은 같지만 자바는 camelCase로 씀.
     private Long memberId;
     private String username;
-    private String password;   // 입력(가입)용. 출력 시에는 of()에서 일부러 담지 않아 외부로 노출되지 않음
     private String nickname;
     private String character;
     private String gender;
@@ -41,7 +40,6 @@ public class MemberDTO {
         return MemberVO.builder()
                 .memberId(memberId)
                 .username(username)
-                .password(password)
                 .nickname(nickname)
                 .character(character)
                 .gender(gender)

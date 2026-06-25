@@ -3,6 +3,7 @@ package org.scoula.member.service;
 import lombok.RequiredArgsConstructor;
 import org.scoula.member.domain.MemberVO;
 import org.scoula.member.dto.MemberDTO;
+import org.scoula.member.dto.MemberJoinDTO;
 import org.scoula.member.mapper.MemberMapper;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class MemberServiceImpl implements MemberService {
     final private MemberMapper mapper;
 
     @Override
-    public MemberDTO join(MemberDTO member) {
+    public MemberDTO join(MemberJoinDTO member) {
         // 1. 아이디 중복 선검사 → 중복이면 예외를 던져서 가입을 중단시킴
         if (checkUsername(member.getUsername())) {
             throw new IllegalArgumentException("이미 사용 중인 아이디입니다: " + member.getUsername());
