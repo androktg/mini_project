@@ -28,7 +28,7 @@ public class AssetServiceImpl implements AssetService {
 
     @Override
     public AssetDTO get(Long assetId) {
-        // id로 조회, 없으면 예외
+        // id로 조회, 없으면 예외, 내 id로 들어가서 각각 유동자산, 비유동자산 조회, 만약에 작성된게 없으면 예외 처리!
         AssetVO vo = Optional.ofNullable(mapper.get(assetId))
                 .orElseThrow(NoSuchElementException::new);
         return AssetDTO.of(vo);

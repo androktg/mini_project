@@ -13,13 +13,23 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 
+
 @Configuration
 @PropertySource({"classpath:/application.properties"})
-@ComponentScan(basePackages = {"org.scoula"})
-@MapperScan(basePackages = {"org.scoula"})
+@ComponentScan(basePackages = {
+        "org.scoula.asset.service",
+        "org.scoula.member.service",
+        "org.scoula.product.service"
+})
+@MapperScan(basePackages = {
+        "org.scoula.asset.mapper",
+        "org.scoula.member.mapper",
+        "org.scoula.product.mapper"
+})
 public class RootConfig {
 
     @Value("${jdbc.driver}") String driver;
