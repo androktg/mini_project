@@ -15,34 +15,26 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @Log4j2
 class MemberServiceTest {
 
-    // 스프링이 만들어 둔 MemberService Bean을 자동으로 넣어줌(@Autowired = 의존성 주입)
     @Autowired
     private MemberService service;
 
     @Test
     public void join() {
-        // 빌더 패턴으로 가입에 쓸 회원 정보를 만든다
-        MemberJoinDTO member = MemberJoinDTO.builder()
-                .username("svc_test01")
-                .password("pw1234")
-                .nickname("서비스테스터")
-                .character("char_a")
-                .gender("M")
-                .age(25)
-                .region("서울")
-                .build();
+        MemberJoinDTO dto = new MemberJoinDTO();
+        dto.setUsername("svc_user01");
+        dto.setPassword("pw1234");
+        dto.setNickname("서비스유저01");
+        dto.setCharacter("char_a");
+        dto.setGender("M");
+        dto.setAge(28);
+        dto.setRegion("부산");
 
-        MemberDTO joined = service.join(member);
-        log.info("가입 결과(password 제외): " + joined);
+        MemberDTO result = service.join(dto);
+        log.info("가입 결과: " + result);  // password 없이 나오면 정상
     }
 
     @Test
     public void get() {
-        log.info(service.get("svc_test01"));
-    }
-
-    @Test
-    public void checkUsername() {
-        log.info("중복 여부(true면 사용 불가): " + service.checkUsername("svc_test01"));
+        log.info(service.get("svc_user01"));
     }
 }

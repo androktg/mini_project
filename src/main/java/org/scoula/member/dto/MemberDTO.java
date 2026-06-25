@@ -13,7 +13,6 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class MemberDTO {
-    // ↓ 화면/API에서 다루는 회원 정보 필드들. DB 컬럼(snake_case)과 이름은 같지만 자바는 camelCase로 씀.
     private Long memberId;
     private String username;
     private String nickname;
@@ -22,7 +21,9 @@ public class MemberDTO {
     private Integer age;
     private String region;
     private Date createdAt;
+    // password 없음 — 조회 결과에 비밀번호를 노출하지 않으려고 의도적으로 제외
 
+    // VO -> DTO (조회 결과 내보낼 때)
     public static MemberDTO of(MemberVO vo) {
         return MemberDTO.builder()
                 .memberId(vo.getMemberId())
@@ -36,6 +37,7 @@ public class MemberDTO {
                 .build();
     }
 
+    // DTO -> VO (수정하러 갈 때). password는 다루지 않음(수정은 닉네임·캐릭터만)
     public MemberVO toVO() {
         return MemberVO.builder()
                 .memberId(memberId)
