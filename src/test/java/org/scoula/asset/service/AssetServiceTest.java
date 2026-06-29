@@ -36,4 +36,32 @@ class AssetServiceTest {
         List<AssetDTO> list = service.getList(1L);
         list.forEach(a -> log.info(a));
     }
+
+    @Test
+    public void get() {
+        // ⚠️ 실제 존재하는 assetId로 바꿔서 테스트 (getList로 확인한 id)
+        AssetDTO asset = service.get(1L);
+        log.info("단건 조회: " + asset);
+    }
+
+    @Test
+    public void update() {
+        // ⚠️ 실제 존재하는 assetId 필요
+        AssetDTO dto = AssetDTO.builder()
+                .assetId(1L)           // 수정 대상 id
+                .memberId(1L)
+                .category("투자")
+                .assetType("주식")
+                .amount(8000000L)
+                .build();
+        AssetDTO result = service.update(dto);
+        log.info("수정 결과: " + result);
+    }
+
+    @Test
+    public void delete() {
+        // ⚠️ 실제 존재하는 assetId 필요 (지우면 사라지니 주의)
+        service.delete(1L);
+        log.info("삭제 완료");
+    }
 }
