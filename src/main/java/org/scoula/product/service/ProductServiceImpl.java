@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-    final private ProductMapper mapper;
-    final private AssetMapper assetMapper; // 추가(자산 조회용)
+    private final ProductMapper mapper;
+    private final AssetMapper assetMapper; // 추가(자산 조회용)
 
     @Override
     public List<ProductDTO> getList() {
@@ -38,13 +38,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO recommend(Long memberId){
-        // 고객 총 자산 합계
-        long amount = assetMapper.getTotalAmount(memberId);
-
-        // 가입 가능한 상품 중 이율 최고 1개
-        ProductVO vo = Optional.ofNullable(mapper.getRecommend(amount))
-                .orElseThrow(NoSuchElementException::new);
-        return ProductDTO.of(vo);
+    public List<ProductDTO> recommend(Long memberId) {
+        Long total = assetMapper.getTotalAmount(memberId);   // 내 여윳돈 = 총자산
+        return mapper.getRecommendList(total).stream()       // 가입 가능 + 금리순
+                .map(ProductDTO::of)
+                .collect(Collectors.toList());
     }
 }

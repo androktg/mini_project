@@ -1,9 +1,12 @@
 package org.scoula.member.service;
 
 import lombok.RequiredArgsConstructor;
+import org.scoula.asset.mapper.AssetMapper;
 import org.scoula.member.domain.MemberVO;
+import org.scoula.member.domain.Tier;
 import org.scoula.member.dto.MemberDTO;
 import org.scoula.member.dto.MemberJoinDTO;
+import org.scoula.member.dto.TierDTO;
 import org.scoula.member.mapper.MemberMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +20,8 @@ public class MemberServiceImpl implements MemberService {
 
     // DB 접근 담당(MyBatis Mapper). 스프링이 생성자로 자동 주입.
     private final MemberMapper mapper;
+
+    private final AssetMapper assetMapper;
 
     @Override
     public boolean checkUsername(String username) {
@@ -73,5 +78,12 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean delete(Long memberId) {
         return mapper.delete(memberId) > 0;
+    }
+
+    @Override
+    public TierDTO getTier(Long memberId) {
+        Long total = assetMapper.getTotalAmount(memberId);   // 총자산
+        Tier tier = Tier.of(total);                          // 티어 판정
+        return new TierDTO(memberId, total, tier.getName());
     }
 }

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.scoula.member.dto.MemberDTO;
 import org.scoula.member.dto.MemberJoinDTO;
+import org.scoula.member.dto.TierDTO;
 import org.scoula.member.service.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,5 +48,11 @@ public class MemberController {
     public ResponseEntity<Void> delete(@PathVariable Long memberId) {
         service.delete(memberId);
         return ResponseEntity.ok().build();
+    }
+
+    // 내 금융 티어 : GET /api/members/3/tier
+    @GetMapping("/{memberId}/tier")
+    public ResponseEntity<TierDTO> getTier(@PathVariable Long memberId) {
+        return ResponseEntity.ok(service.getTier(memberId));
     }
 }

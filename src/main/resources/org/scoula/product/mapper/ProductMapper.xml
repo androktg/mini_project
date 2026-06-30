@@ -12,21 +12,11 @@
         select * from product where product_id = #{productId}
     </select>
 
-    <select id="getRecommend" resultType="org.scoula.product.domain.ProductVO">
-        SELECT *
-        FROM product
-        WHERE max_rate IS NOT NULL
-          AND (
-            -- 예금 : 최소 가입금액이 내 자산 이하
-            (product_type = '예금'
-                AND (min_amount IS NULL OR min_amount &lt;= #{amount}))
-                OR
-                -- 적금 : (월 최대납입 × 최대개월수)가 내 자산 이하
-            (product_type = '적금'
-                AND (max_amount * max_period) &lt;= #{amount})
-            )
+    <select id="getRecommendList" resultType="org.scoula.product.domain.ProductVO">
+        SELECT * FROM product
+        WHERE min_amount &lt;= #{maxAmount}
         ORDER BY max_rate DESC
-            LIMIT 1
+            LIMIT 5
     </select>
 
 </mapper>

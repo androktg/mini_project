@@ -12,5 +12,5 @@ public interface ProductService {
     ProductDTO get(Long productId);
 
     // 상품 추천
-    ProductDTO recommend(Long memberID);
+    List<ProductDTO> recommend(Long memberId);
 }

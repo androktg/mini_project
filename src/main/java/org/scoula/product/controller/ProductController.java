@@ -29,9 +29,9 @@ public class ProductController {
         return ResponseEntity.ok(service.get(id));
     }
 
-
-    @GetMapping("/recommand")
-    public ResponseEntity<ProductDTO> recommend(@RequestParam Long memberId){
+    // 자산 기반 상품 추천 : GET /api/products/recommend?memberId=3
+    @GetMapping("/recommend")
+    public ResponseEntity<List<ProductDTO>> recommend(@RequestParam Long memberId) {
         return ResponseEntity.ok(service.recommend(memberId));
     }
 
