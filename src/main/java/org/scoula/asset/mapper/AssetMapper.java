@@ -19,4 +19,7 @@ public interface AssetMapper {
 
     // D - 자산 삭제
     int delete(Long assetId);
+
+    // R - 회원 총자산 합계(추천용)
+    long getTotalAmount(Long memberID);
 }

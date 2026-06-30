@@ -10,4 +10,7 @@ public interface ProductService {
 
     // 상품 단건 조회
     ProductDTO get(Long productId);
+
+    // 상품 추천
+    ProductDTO recommend(Long memberID);
 }

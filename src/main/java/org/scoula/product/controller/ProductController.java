@@ -28,4 +28,11 @@ public class ProductController {
     public ResponseEntity<ProductDTO> get(@PathVariable Long id) {
         return ResponseEntity.ok(service.get(id));
     }
+
+
+    @GetMapping("/recommand")
+    public ResponseEntity<ProductDTO> recommend(@RequestParam Long memberId){
+        return ResponseEntity.ok(service.recommend(memberId));
+    }
+
 }
