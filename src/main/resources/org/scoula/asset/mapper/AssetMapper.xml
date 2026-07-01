@@ -19,6 +19,12 @@
         SELECT * FROM asset WHERE asset_id = #{assetId}
     </select>
 
+    <select id = "getTotalAmount" resultType = "long">
+        SELECT  COALESCE(SUM(amount), 0)
+        FROM asset
+        WHERE member_id = #{memberId}
+    </select>
+
     <update id="update">
         UPDATE asset
         SET category   = #{category},

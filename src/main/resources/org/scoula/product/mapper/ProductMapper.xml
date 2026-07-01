@@ -12,4 +12,11 @@
         select * from product where product_id = #{productId}
     </select>
 
+    <select id="getRecommendList" resultType="org.scoula.product.domain.ProductVO">
+        SELECT * FROM product
+        WHERE min_amount &lt;= #{maxAmount}
+        ORDER BY max_rate DESC
+            LIMIT 5
+    </select>
+
 </mapper>

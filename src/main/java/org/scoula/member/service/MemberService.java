@@ -2,6 +2,7 @@ package org.scoula.member.service;
 
 import org.scoula.member.dto.MemberDTO;
 import org.scoula.member.dto.MemberJoinDTO;
+import org.scoula.member.dto.TierDTO;
 
 public interface MemberService {
 
@@ -22,4 +23,7 @@ public interface MemberService {
 
     // 회원 탈퇴 - 성공하면 true
     boolean delete(Long memberId);
+
+    // 조회 - Tier 조회
+    TierDTO getTier(Long memberId);
 }

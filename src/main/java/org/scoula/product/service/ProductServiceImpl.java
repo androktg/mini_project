@@ -1,6 +1,7 @@
 package org.scoula.product.service;
 
 import lombok.RequiredArgsConstructor;
+import org.scoula.asset.mapper.AssetMapper;
 import org.scoula.product.domain.ProductVO;
 import org.scoula.product.dto.ProductDTO;
 import org.scoula.product.mapper.ProductMapper;
@@ -15,7 +16,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-    final private ProductMapper mapper;
+    private final ProductMapper mapper;
+    private final AssetMapper assetMapper; // 추가(자산 조회용)
 
     @Override
     public List<ProductDTO> getList() {
@@ -33,5 +35,13 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(NoSuchElementException::new);
         // 2. VO -> DTO 변환
         return ProductDTO.of(vo);
+    }
+
+    @Override
+    public List<ProductDTO> recommend(Long memberId) {
+        Long total = assetMapper.getTotalAmount(memberId);   // 내 여윳돈 = 총자산
+        return mapper.getRecommendList(total).stream()       // 가입 가능 + 금리순
+                .map(ProductDTO::of)
+                .collect(Collectors.toList());
     }
 }

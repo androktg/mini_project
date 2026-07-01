@@ -28,4 +28,11 @@ public class ProductController {
     public ResponseEntity<ProductDTO> get(@PathVariable Long id) {
         return ResponseEntity.ok(service.get(id));
     }
+
+    // 자산 기반 상품 추천 : GET /api/products/recommend?memberId=3
+    @GetMapping("/recommend")
+    public ResponseEntity<List<ProductDTO>> recommend(@RequestParam Long memberId) {
+        return ResponseEntity.ok(service.recommend(memberId));
+    }
+
 }
